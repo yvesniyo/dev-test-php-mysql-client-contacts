@@ -1,0 +1,21 @@
+{
+    "name": "yvesniyo/dev-test",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Niyobuhungiro Yves",
+            "email": "niyobuhungiro.yves@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "pecee/simple-router": "^4.0",
+        "divineomega/dotenv-loader": "^2.0"
+    }
+}
