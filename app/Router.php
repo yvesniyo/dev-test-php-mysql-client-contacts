@@ -1,5 +1,7 @@
 <?php
+
 namespace App;
+
 /**
  * Custom router which handles default middlewares, default exceptions and things
  * that should be happen before and after the router is initialised.
@@ -22,7 +24,7 @@ class Router extends SimpleRouter
 		require_once 'helpers.php';
 
 		// Load our custom routes
-		require_once '../routes/main.php';
+		require_once '../routes/web.php';
 
 		// Do initial stuff
 		parent::start();

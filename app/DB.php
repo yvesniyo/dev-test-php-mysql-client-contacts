@@ -4,7 +4,7 @@ namespace App;
 
 use mysqli;
 
-class DbConnection
+class DB
 {
     public static ?mysqli $mysqli = null;
 

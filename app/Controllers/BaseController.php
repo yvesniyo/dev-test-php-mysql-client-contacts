@@ -10,11 +10,21 @@ abstract class BaseController
     {
 
         foreach ($vars as $key => $value) {
-            
+
             $$key = $value;
         }
 
-        return require(__DIR__ . "/../../views/" . $resourceName . ".php");
+        require(__DIR__ . "/../../views/" . $resourceName . ".php");
     }
 
+
+    public function json(array $data, int $statusCode = 200)
+    {
+
+        header("Content-Type:application/json");
+
+        http_response_code($statusCode);
+
+        return json_encode($data);
+    }
 }

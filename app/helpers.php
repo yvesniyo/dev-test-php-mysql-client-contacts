@@ -86,3 +86,14 @@ function csrf_token(): ?string
 
     return null;
 }
+
+
+
+function randomString(int $length)
+{
+
+    $chars = "qwertyuiopasdfghjklzxcvbnm";
+    $shuffled = str_shuffle($chars);
+
+    return substr($shuffled, 0, $length);
+}
