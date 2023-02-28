@@ -20,15 +20,21 @@ class ClientsController extends BaseController
     public function create()
     {
 
-        $name = input("name");
+        $name = trim(input("name"));
+        if (empty($name)) {
+
+            return $this->json([
+                "message" => "Name should not be empty",
+            ], 422);
+        }
 
 
         $clientCode = $this->generateClientCode($name);
 
         while (
             DB::make()
-            ->query("SELECT count(*) FROM clients where client_code = '$clientCode' limit 1")
-            ->num_rows == 0
+            ->query("SELECT * FROM clients where client_code = '$clientCode' limit 1")
+            ->num_rows > 0
         ) {
             $clientCode = $this->generateClientCode($name);
         }
@@ -38,12 +44,10 @@ class ClientsController extends BaseController
             "client_code" => $clientCode,
         ]);
 
-        $output = [
+        return $this->json([
             "message" => "Client created successfully",
             "client" => $client
-        ];
-
-        return $this->json($output);
+        ]);
     }
 
 
@@ -60,7 +64,6 @@ class ClientsController extends BaseController
     private function generateClientCode(string $name): string
     {
 
-        $name = trim($name);
         $names = explode(" ", $name);
         $clientCode = "";
 

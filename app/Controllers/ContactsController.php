@@ -23,7 +23,7 @@ class ContactsController extends BaseController
         $surname = trim(input("surname"));
         $email =  trim(input("email"));
 
-        $emailExists = DB::make()->query("SELECT count(*) FROM contacts WHERE  email = '$email' LIMIT 1")->num_rows > 0;
+        $emailExists = DB::make()->query("SELECT * FROM contacts WHERE  email = '$email' LIMIT 1")->num_rows > 0;
         if ($emailExists) {
 
             return $this->json([

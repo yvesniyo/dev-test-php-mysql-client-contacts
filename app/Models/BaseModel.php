@@ -31,6 +31,12 @@ abstract class BaseModel
 
     public static function find(int $id)
     {
+        if ($id == 0) {
+
+            return null;
+        }
+
+
         $tableName = static::tableName();
 
         $result = DB::make()->query("SELECT * FROM `{$tableName}` WHERE id = {$id} LIMIT 1");
