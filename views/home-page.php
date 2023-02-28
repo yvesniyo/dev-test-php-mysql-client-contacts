@@ -349,37 +349,38 @@
                 },
                 function(data, statusText, xhr) {
 
-                    if (xhr.status == 200) {
+                    fetchAllContacts();
 
-                        fetchAllContacts();
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'success',
-                            text: data.message
-                        })
-                        $("#addContactModal").modal("toggle");
-                        $("#contact-name").val("");
-                        $("#contact-surname").val("");
-                        $("#contact-email").val("");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'success',
+                        text: data.message
+                    })
+                    $("#addContactModal").modal("toggle");
+                    $("#contact-name").val("");
+                    $("#contact-surname").val("");
+                    $("#contact-email").val("");
 
 
-                    } else if (xhr.status == 422) {
+                }).fail((xhr, err) => {
 
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'invalid',
-                            text: data.message
-                        })
+                if (xhr.status >= 400 && xhr.status < 500) {
 
-                    } else {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'success',
-                            text: "An error occured while trying to save contact"
-                        })
-                    }
-                });
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'invalid',
+                        text: xhr.responseJSON.message
+                    })
+
+                } else {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'success',
+                        text: "An error occured while trying to save contact"
+                    })
+                }
+            });
 
             return false;
         })
@@ -395,33 +396,37 @@
             $.post(route, {},
                 function(data, statusText, xhr) {
 
-                    if (xhr.status == 200) {
 
-                        fetchAllContacts();
-                        fetchAllClients();
+                    fetchAllContacts();
+                    fetchAllClients();
 
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'success',
-                            text: data.message
-                        })
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'success',
+                        text: data.message
+                    })
 
-                        $("#connectClientContactModal").modal("toggle");
-                    } else if (xhr.status == 422) {
+                    $("#connectClientContactModal").modal("toggle");
 
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Invalid',
-                            text: data.message
-                        })
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Invalid',
-                            text: "An error occured while trying to connect contact and client"
-                        })
-                    }
-                });
+                }).fail((xhr, err) => {
+
+                if (xhr.status >= 400 && xhr.status < 500) {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'invalid',
+                        text: xhr.responseJSON.message
+                    })
+
+                } else {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'success',
+                        text: "An error occured while trying to save contact"
+                    })
+                }
+            });
 
             return false;
         })
@@ -658,41 +663,40 @@
                     contactId
                 }, function(data, statusText, xhr) {
 
-                    if (xhr.status == 200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'success',
+                        text: data.message
+                    })
+
+                    fetchAllContacts();
+                    fetchAllClients();
+
+                    if (fnToReload == "detachContacts") {
+
+                        detachContacts(clientId);
+                    } else {
+                        detachClients(contactId);
+                    }
+
+                }).fail((xhr, err) => {
+
+                    if (xhr.status >= 400 && xhr.status < 500) {
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'invalid',
+                            text: xhr.responseJSON.message
+                        })
+
+                    } else {
 
                         Swal.fire({
                             icon: 'success',
                             title: 'success',
-                            text: data.message
-                        })
-
-                        fetchAllContacts();
-                        fetchAllClients();
-
-                        if (fnToReload == "detachContacts") {
-
-                            detachContacts(clientId);
-                        } else {
-                            detachClients(contactId);
-                        }
-
-
-
-                    } else if (xhr.status >= 400 && xhr.status < 500) {
-
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'invalid',
-                            text: data.message
-                        })
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'invalid',
-                            text: "An error occured while trying to separate contact from client"
+                            text: "An error occured while trying to save contact"
                         })
                     }
-
                 });
 
             }
