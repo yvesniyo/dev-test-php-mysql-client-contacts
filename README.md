@@ -18,4 +18,8 @@ After filling in .env right connections to the database, you can import the sql 
 
 ### Running the project
 
+
+`cd public`
+
+
 `php -S localhost:8000`
